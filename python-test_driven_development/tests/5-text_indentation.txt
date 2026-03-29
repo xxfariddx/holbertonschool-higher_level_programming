@@ -1,0 +1,36 @@
+====================================
+The ``5-text_indentation`` module
+====================================
+
+Importing the function:
+    >>> text_indentation = __import__('5-text_indentation').text_indentation
+
+Normal usage:
+    >>> text_indentation("Hello. How are you? I am fine: thanks.")
+    Hello.
+    <BLANKLINE>
+    How are you?
+    <BLANKLINE>
+    I am fine:
+    <BLANKLINE>
+    thanks.
+
+Handling multiple spaces after delimiters:
+    >>> text_indentation("Sentence one.   Sentence two?    Final.")
+    Sentence one.
+    <BLANKLINE>
+    Sentence two?
+    <BLANKLINE>
+    Final.
+
+Non-string input:
+    >>> text_indentation(12345)
+    Traceback (most recent call last):
+        ...
+    TypeError: text must be a string
+
+Missing argument:
+    >>> text_indentation()
+    Traceback (most recent call last):
+        ...
+    TypeError: text_indentation() missing 1 required positional argument: 'text'
