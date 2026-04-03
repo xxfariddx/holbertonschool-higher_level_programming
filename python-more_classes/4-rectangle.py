@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""This module defines a Rectangle class with string and repr representation."""
+"""This module defines a Rectangle class with string and repr
+representation.
+"""
 
 
 class Rectangle:
