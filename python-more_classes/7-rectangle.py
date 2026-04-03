@@ -69,7 +69,8 @@ class Rectangle:
         """Return a string representation to recreate a new instance."""
         return (
             "Rectangle({}, {})"
-            .format(self.__width, self.__height)
+            .format(self.__width,
+                    self.__height)
         )
 
     def __del__(self):
