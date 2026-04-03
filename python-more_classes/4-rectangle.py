@@ -52,12 +52,14 @@ class Rectangle:
         """Return the rectangle as a string using # characters."""
         if self.__width == 0 or self.__height == 0:
             return ""
-        return "\n".join("#" * self.__width for _ in range(self.__height))
+        return "\n".join(
+            "#" * self.__width for _ in range(self.__height)
+        )
 
     def my_print(self):
         """Print the rectangle using # characters."""
         print(self.__str__())
 
     def __repr__(self):
-        """Return a string representation of the rectangle to recreate a new instance."""
-        return f"Rectangle({self.__width}, {self.__height})"
+        """Return a string representation to recreate a new instance."""
+        return "Rectangle({}, {})".format(self.__width, self.__height)
