@@ -1,31 +1,38 @@
-guillaume@ubuntu:~/0x01$ cat 1-my_list.py
-#!/usr/bin/python3
-"""Module that defines MyList class"""
+The ``1-my_list`` module
+========================
 
+Using ``MyList``
+----------------
+Import the class:
+    >>> MyList = __import__('1-my_list').MyList
 
-class MyList(list):
-    """MyList inherits from list"""
+Check basic sorting:
+    >>> my_list = MyList([1, 4, 2, 3, 5])
+    >>> my_list.print_sorted()
+    [1, 2, 3, 4, 5]
+    >>> print(my_list)
+    [1, 4, 2, 3, 5]
 
-    def print_sorted(self):
-        """Prints the list sorted in ascending order"""
-        print(sorted(self))
-guillaume@ubuntu:~/0x01$ cat tests/1-my_list.txt
->>> MyList = __import__('1-my_list').MyList
->>> my_list = MyList()
->>> my_list.append(1)
->>> my_list.append(4)
->>> my_list.append(2)
->>> my_list.append(3)
->>> my_list.append(5)
->>> print(my_list)
-[1, 4, 2, 3, 5]
->>> my_list.print_sorted()
-[1, 2, 3, 4, 5]
->>> print(my_list)
-[1, 4, 2, 3, 5]
->>> my_list = MyList([-3, -1, -2, 0])
->>> my_list.print_sorted()
-[-3, -2, -1, 0]
->>> my_list = MyList([10, 9, 8, 7])
->>> my_list.print_sorted()
-[7, 8, 9, 10]
+Check sorting with negative numbers:
+    >>> my_list = MyList([-1, -10, 5, 0])
+    >>> my_list.print_sorted()
+    [-10, -1, 0, 5]
+
+Check an empty list:
+    >>> my_list = MyList()
+    >>> my_list.print_sorted()
+    []
+
+Check inheritance (append and pop):
+    >>> my_list = MyList([3, 2, 1])
+    >>> my_list.append(0)
+    >>> my_list.print_sorted()
+    [0, 1, 2, 3]
+    >>> popped = my_list.pop(0)
+    >>> print(my_list)
+    [2, 1, 0]
+
+Check sorting with non-unique integers:
+    >>> my_list = MyList([1, 2, 2, 1, 3])
+    >>> my_list.print_sorted()
+    [1, 1, 2, 2, 3]
