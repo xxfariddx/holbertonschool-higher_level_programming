@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module that contains a function that returns the dictionary 
+Module that contains a function that returns the dictionary
 description of an object for JSON serialization
 """
 
