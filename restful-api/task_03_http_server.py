@@ -4,12 +4,11 @@ import json
 
 class SimpleAPI(BaseHTTPRequestHandler):
 
-    # -----------------------------
-    # Handle GET requests
-    # -----------------------------
     def do_GET(self):
 
+        # -------------------------
         # Root endpoint "/"
+        # -------------------------
         if self.path == "/":
             self.send_response(200)
             self.send_header("Content-type", "text/plain")
@@ -17,7 +16,9 @@ class SimpleAPI(BaseHTTPRequestHandler):
 
             self.wfile.write(b"Hello, this is a simple API!")
 
-        # /data endpoint
+        # -------------------------
+        # /data endpoint (JSON)
+        # -------------------------
         elif self.path == "/data":
             data = {
                 "name": "John",
@@ -31,29 +32,30 @@ class SimpleAPI(BaseHTTPRequestHandler):
 
             self.wfile.write(json.dumps(data).encode())
 
-        # /status endpoint
+        # -------------------------
+        # /status endpoint (IMPORTANT: must be plain text)
+        # -------------------------
         elif self.path == "/status":
-            data = {"status": "OK"}
-
             self.send_response(200)
-            self.send_header("Content-type", "application/json")
+            self.send_header("Content-type", "text/plain")
             self.end_headers()
 
-            self.wfile.write(json.dumps(data).encode())
+            self.wfile.write(b"OK")
 
-        # Undefined routes → 404
+        # -------------------------
+        # Undefined endpoints (404)
+        # -------------------------
         else:
             self.send_response(404)
-            self.send_header("Content-type", "application/json")
+            self.send_header("Content-type", "text/plain")
             self.end_headers()
 
-            error = {"error": "Endpoint not found"}
-            self.wfile.write(json.dumps(error).encode())
+            self.wfile.write(b"Endpoint not found")
 
 
-# -----------------------------
+# -------------------------
 # Start server
-# -----------------------------
+# -------------------------
 def run():
     server_address = ("", 8000)
     httpd = HTTPServer(server_address, SimpleAPI)
@@ -62,6 +64,8 @@ def run():
     httpd.serve_forever()
 
 
-# Run the server
+# -------------------------
+# Entry point
+# -------------------------
 if __name__ == "__main__":
     run()
