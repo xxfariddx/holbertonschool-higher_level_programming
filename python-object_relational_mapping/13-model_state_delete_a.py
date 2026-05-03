@@ -26,7 +26,9 @@ if __name__ == "__main__":
 
     # 1. Adında 'a' hərfi olan bütün State obyektlərini tapırıq
     # .like('%a%') SQL-dəki LIKE '%a%' ifadəsinə bərabərdir
-    states_to_delete = session.query(State).filter(State.name.like('%a%')).all()
+    states_to_delete = session.query(State).filter(
+        State.name.like('%a%')
+    ).all()
 
     # 2. Tapılan hər bir obyekti session-dan silirik
     for state in states_to_delete:
