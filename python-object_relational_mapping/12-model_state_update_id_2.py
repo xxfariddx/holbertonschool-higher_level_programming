@@ -29,7 +29,7 @@ if __name__ == "__main__":
     # 2. If the state exists, update its name
     if state_to_update:
         state_to_update.name = "New Mexico"
-        
+
         # 3. Commit the session to persist changes in the database
         session.commit()
 
