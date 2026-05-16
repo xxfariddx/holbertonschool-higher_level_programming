@@ -1,48 +1,77 @@
-def generate_invitations(template_content, attendees):
-    def empty_data(template, dictionary, element):
-        try:
-            placeholder = '{' + element + '}'
-            return(template.replace(placeholder, check_el(dictionary[element])))
-        except KeyError:
-            return(template.replace(placeholder, 'N/A'))
-    
-    def check_el(element):
-        if element == None:
-            return ('N/A')
-        return (element)
+#!/usr/bin/python3
+import os
 
-    n = 1
+"""
+    Generate invitations based on a template and a list of attendees.
 
-    if len(attendees) == 0:
-        print("No data provided, no output files generated.")
-        return
+    Args:
+    template (str): The invitation template as a string.
+    attendees (list): A list of dictionaries.
 
-    for i in attendees:
-        template = template_content
+    Raises:
+    ValueError: If the template is not a string, if the attendees list
+    is not a list, if any item in the attendees list is not a dictionary,
+    or if the template is empty.
+"""
 
+
+def generate_invitations(template, attendees):
+
+    # Several checks...
+    try:
         if not isinstance(template, str):
-            print(f"Error: template must be a string, got {type(template)}")
-            return
-        
-        if not isinstance(attendees, list):
-            print(f"Error: attendees must be a list, got {type(attendees)}")
-            return
-        
-        if not isinstance(i, dict):
-            print(f"Error: list must contain dictionaries, got {type(item)}")
-            return
+            raise ValueError("[ERROR] - Template should be a string.")
 
-        if len(template) == 0:
+        if not template.strip():
+            raise ValueError(
+                "[ERROR] - Template string should not be empty or just spaces."
+            )
+
+        if not isinstance(attendees, list):
+            raise ValueError("[ERROR] - Template should be a string.")
+
+        if not attendees:
+            raise ValueError("[ERROR] - Attendees list should not be empty.")
+
+        for item in attendees:
+            if not isinstance(item, dict):
+                raise ValueError(
+                    "[ERROR] - Attendees should be a list of dictionaries."
+                    )
+
+        template_content = template
+
+        if not template_content.strip():
             print("Template is empty, no output files generated.")
             return
 
-        template = empty_data(template, i, 'name')
-        template = empty_data(template, i, 'event_title')
-        template = empty_data(template, i, 'event_date')
-        template = empty_data(template, i, 'event_location')
+    except ValueError as err:
+        print(err)
+        return
 
-        output = 'output_' + str(n) + '.txt'
-        with open(output, 'w') as file:
-            file.write(template)
+    # Check for missing keys in the attendees list and update them with "N/A"
+    for item in attendees:
+        if not item.get("name"):
+            item.update({"name": "N/A"})
+        if not item.get("event_title"):
+            item.update({"event_title": "N/A"})
+        if not item.get("event_date"):
+            item.update({"event_date": "N/A"})
+        if not item.get("event_location"):
+            item.update({"event_location": "N/A"})
 
-        n += 1
+    counter = 1
+
+    for item in attendees:
+        invitation = template_content
+        invitation = invitation.replace("{name}", item["name"])
+        invitation = invitation.replace("{event_title}", item["event_title"])
+        invitation = invitation.replace("{event_date}", item["event_date"])
+        invitation = invitation.replace(
+            "{event_location}", item["event_location"])
+
+        output_filename = f"output_{counter}.txt"
+        with open(output_filename, 'w') as file:
+            file.write(invitation)
+
+        counter += 1
